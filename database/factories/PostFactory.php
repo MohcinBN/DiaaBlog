@@ -21,7 +21,7 @@ class PostFactory extends Factory
         return [
             'title' => fake()->sentence(),
             'content' => fake()->paragraphs(3, true),
-            'featured_image' => fake()->imageUrl(640, 480, 'blog'),
+            'featured_image' => 'https://placehold.co/600x400/EEE/31343C', 
             'user_id' => User::factory(),
         ];
     }

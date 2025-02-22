@@ -20,7 +20,7 @@ class PhotoFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
-            'url' => fake()->imageUrl(800, 600, 'nature'),
+            'url' => 'https://placehold.co/600x400/EEE/31343C',
             'caption' => fake()->paragraph(),
             'user_id' => User::factory(),
         ];
