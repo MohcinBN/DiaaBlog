@@ -17,11 +17,14 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
+                    <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.*')">
                         {{ __('Posts') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('photos.index')" :active="request()->routeIs('photos.index')">
-                        {{ __('Photos') }}
+                    <x-nav-link :href="route('photos.index')" :active="request()->routeIs('photos.*')">
+                        {{ __('Photo Galleries') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('videos.index')" :active="request()->routeIs('videos.*')">
+                        {{ __('Videos') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -77,6 +80,15 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.*')">
+                {{ __('Posts') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('photos.index')" :active="request()->routeIs('photos.*')">
+                {{ __('Photo Galleries') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('videos.index')" :active="request()->routeIs('videos.*')">
+                {{ __('Videos') }}
             </x-responsive-nav-link>
         </div>
 
