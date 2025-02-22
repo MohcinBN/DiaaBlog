@@ -7,7 +7,7 @@
         </h2>
         </div>
         <div>
-            <a href="{{ route('posts.create') }}" type="button" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <a href="{{ route('posts.create') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 Write New Post
             </a>
         </div>
@@ -65,12 +65,18 @@
                     {{ $post->updated_at }}
                 </td>
                 <td class="px-6 py-4">
-                    <a href="{{ route('posts.edit', $post->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    <form action="{{ route('posts.destroy', $post->id) }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline" onclick="return deleteResource('Article')">Delete</button>
-                    </form>
+                    <div class="flex space-x-2">
+                        <a href="{{ route('posts.edit', $post->id) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                            Edit
+                        </a>
+                        <form action="{{ route('posts.destroy', $post->id) }}" method="post" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150" onclick="return deleteResource('Article')">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         @endforeach
