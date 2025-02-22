@@ -38,8 +38,8 @@ class DatabaseSeeder extends Seeder
                 'user_id' => $user->id
             ]);
 
-            // Each user creates 4-8 photos
-            Photo::factory(fake()->numberBetween(4, 8))->create([
+            // Each user creates 2-3 photo galleries
+            Photo::factory(fake()->numberBetween(2, 3))->create([
                 'user_id' => $user->id
             ]);
         });
