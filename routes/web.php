@@ -45,3 +45,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::post('/upload-video', [VideoController::class, 'upload']);
+
+Route::get('/youtube-videos', [VideoController::class, 'fetchVideos']);
+
+Route::get('/', [VideoController::class, 'fetchVideos']);
