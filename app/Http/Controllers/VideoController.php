@@ -120,30 +120,15 @@ class VideoController extends Controller
         'channelId' => 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
         'part' => 'snippet',
         'order' => 'date',
-        'maxResults' => 1,
+        'maxResults' => 3,
         'type' => 'video',
     ]);
 
     if ($response->successful()) {
-        $items = $response->json()['items'] ?? [];
-
-        if (count($items) > 0) {
-            $video = $items[0];
-            $latestVideo = [
-                'title' => $video['snippet']['title'],
-                'thumbnail' => $video['snippet']['thumbnails']['high']['url'],
-                'videoId' => $video['id']['videoId'],
-            ];
-        } else {
-            $latestVideo = null;
-        }
-
-        return view('welcome', compact('latestVideo'));
+        dd($response->json()); // ⛔ Ajoute cette ligne pour inspecter la réponse
     } else {
-        dd('Error:', $response->status(), $response->body());
+        dd('Erreur API YouTube', $response->status(), $response->json());
     }
 }
-
-
 
 }
