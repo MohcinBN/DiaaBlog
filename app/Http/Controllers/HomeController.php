@@ -16,8 +16,8 @@ class HomeController extends Controller
         $photos = Photo::latest()->get();
 
         $response = Http::get('https://www.googleapis.com/youtube/v3/search', [
-            'key' => env('YOUTUBE_API_KEY'),
-            'channelId' => 'UC_x5XG1OV2P6uZZ5FSM9Ttw', 
+        'key' => env('YOUTUBE_API_KEY'),
+        'channelId' => env('YOUTUBE_CHANNEL_ID'),
             'part' => 'snippet',
             'order' => 'date',
             'maxResults' => 3,
