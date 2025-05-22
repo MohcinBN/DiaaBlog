@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class VideoController extends Controller
 {
@@ -86,4 +87,63 @@ class VideoController extends Controller
         return redirect()->route('videos.index')
             ->with('success', 'Video deleted successfully.');
     }
+
+    public function upload(Request $request)
+{
+    // Validation des données
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'video' => 'required|mimes:mp4,mov,avi,wmv|max:50000' // Max 50MB
+    ]);
+
+    // Sauvegarde de la vidéo dans storage/app/public/videos
+    $videoPath = $request->file('video')->store('videos', 'public');
+
+    // Enregistrement dans la base de données
+    $video = Video::create([
+        'title' => $request->title,
+        'description' => $request->description,
+        'path' => $videoPath
+    ]);
+
+    return response()->json([
+        'message' => 'Vidéo uploadée avec succès!',
+        'video' => $video
+    ], 201);
+}
+
+ public function fetchVideos()
+{
+    $response = Http::get('https://www.googleapis.com/youtube/v3/search', [
+        'key' => env('YOUTUBE_API_KEY'),
+        'channelId' => 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
+        'part' => 'snippet',
+        'order' => 'date',
+        'maxResults' => 1,
+        'type' => 'video',
+    ]);
+
+    if ($response->successful()) {
+        $items = $response->json()['items'] ?? [];
+
+        if (count($items) > 0) {
+            $video = $items[0];
+            $latestVideo = [
+                'title' => $video['snippet']['title'],
+                'thumbnail' => $video['snippet']['thumbnails']['high']['url'],
+                'videoId' => $video['id']['videoId'],
+            ];
+        } else {
+            $latestVideo = null;
+        }
+
+        return view('welcome', compact('latestVideo'));
+    } else {
+        dd('Error:', $response->status(), $response->body());
+    }
+}
+
+
+
 }
