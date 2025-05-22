@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Photo;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PhotoController extends Controller
 {
@@ -37,8 +39,12 @@ class PhotoController extends Controller
             'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
+        $slug = Str::slug($request->title);
+
+
         $photo = Photo::create([
             'title' => $request->title,
+            'slug'=>$slug,
             'caption' => $request->caption,
             'user_id' => Auth::id()
         ]);
@@ -60,9 +66,11 @@ class PhotoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Photo $photo)
+    public function show($slug)
     {
-        //
+        $photo = Photo::where('slug' , $slug)->firstOrFail();
+
+        return view('photos.show', compact('photo'));
     }
 
     /**
@@ -84,8 +92,11 @@ class PhotoController extends Controller
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
+        $slug = Str::slug($request->title);
+
         $photo->update([
             'title' => $request->title,
+            'slug'=> $slug,
             'caption' => $request->caption,
         ]);
 
@@ -119,4 +130,10 @@ class PhotoController extends Controller
         $photo->delete();
         return redirect()->route('photos.index')->with('success', 'Photo deleted successfully.');
     }
+
+    public function getPHotos() {
+        $photos = Photo::all();
+        //dd($photos);
+        return view('welcome', compact('photos'));
+   }
 }

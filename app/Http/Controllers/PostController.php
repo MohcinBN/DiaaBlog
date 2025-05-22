@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        $posts = Post::paginate(2);
+        $posts = Post::paginate(6);
         return view('posts.index', compact('posts'));
     }
 
@@ -34,8 +37,11 @@ class PostController extends Controller
             $imagePath = $request->file('featured_image')->store('images', 'public');
         }
 
+        $slug = Str::slug($request->title);
+
         $post = Post::create([
             'title' => $request->title,
+            'slug'=>$slug,
             'content' => $request->content,
             'featured_image' => $imagePath ?? null,
             'user_id' => Auth::id()
@@ -64,7 +70,10 @@ class PostController extends Controller
             $post->featured_image = $imagePath;
         }
 
+        $slug = Str::slug($request->title);
+
         $post->title = $request->title;
+        $post->slug = $slug;
         $post->content = $request->content;
         $post->save();
 
@@ -80,4 +89,26 @@ class PostController extends Controller
             throw $th;
         }
     }
+
+    public function getPosts() {
+        $posts = Post::all();
+        dd($posts);
+        return view('welcome', compact('posts'));
+   }
+
+   //public function getAllPosts(Post $post)
+//{
+    //$allPosts = Post::latest()->get(); // récupère tous les articles
+
+    //return view('posts.show', compact('allPosts'));
+//}
+
+   public function show($slug)
+{
+    $post = Post::where('slug', $slug)->firstOrFail(); // read article
+    //dd($post);
+   
+    return view('posts.show', compact('post'));
+}
+
 }
