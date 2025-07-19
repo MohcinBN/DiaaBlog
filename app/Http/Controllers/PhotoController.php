@@ -41,24 +41,21 @@ class PhotoController extends Controller
 
         $slug = Str::slug($request->title);
 
+        $paths = [];
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $paths[] = $image->store('photos', 'public');
+            }
+        }
 
         $photo = Photo::create([
             'title' => $request->title,
             'slug'=>$slug,
             'caption' => $request->caption,
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
+            'images' => json_encode($paths)
         ]);
-
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $index => $image) {
-                $path = $image->store('photos', 'public');
-                $photo->images()->create([
-                    'path' => $path,
-                    'is_primary' => $index === 0, // First image is primary
-                    'order' => $index
-                ]);
-            }
-        }
 
         return redirect()->route('photos.index')->with('success', 'Photo created successfully.');
     }

@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Video;
 use App\Models\Photo;
 use App\Models\Comment;
+use App\Models\Image;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

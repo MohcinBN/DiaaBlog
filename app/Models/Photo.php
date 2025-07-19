@@ -13,20 +13,16 @@ class Photo extends Model
         'title',
         'slug',
         'caption',
-        'user_id'
+        'user_id',
+        'images'
+    ];
+
+    // convert images json format to array automatically 
+    protected $casts = [
+        'images' => 'array',
     ];
 
     public function user() {
         return $this->belongsTo(User::class);
-    }
-
-    public function images()
-    {
-        return $this->hasMany(Image::class);
-    }
-
-    public function primaryImage()
-    {
-        return $this->hasOne(Image::class)->where('is_primary', true);
     }
 }

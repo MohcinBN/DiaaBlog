@@ -20,6 +20,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
+            'slug' => fake()->slug(),
             'content' => fake()->paragraphs(3, true),
             'featured_image' => 'https://placehold.co/600x400/EEE/31343C', 
             'user_id' => User::factory(),

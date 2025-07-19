@@ -25,6 +25,17 @@ class PhotoFactory extends Factory
             'title' => $theme . ' Gallery - ' . fake()->words(3, true),
             'caption' => fake()->paragraph(2),
             'user_id' => User::factory(),
+            'images' => json_encode(
+                $this->faker->randomElements(
+                [
+                    $this->faker->imageUrl(640, 480, 'nature'),
+                    $this->faker->imageUrl(640, 480, 'city'),
+                    $this->faker->imageUrl(640, 480, 'architecture'),
+                    $this->faker->imageUrl(640, 480, 'people'),
+                    $this->faker->imageUrl(640, 480, 'travel'),
+                ],
+                rand(3, 5)
+            )),
         ];
     }
 
@@ -35,19 +46,6 @@ class PhotoFactory extends Factory
      */
     public function configure()
     {
-        return $this->afterCreating(function (Photo $photo) {
-            // Create 4-8 images for each gallery
-            $photo->images()->createMany(
-                collect(range(1, fake()->numberBetween(4, 8)))->map(function ($index) {
-                    $width = 600;
-                    $height = 400;
-                    return [
-                        'path' => "https://placehold.co/{$width}x{$height}/EEE/31343C?text=Gallery+Image+{$index}",
-                        'is_primary' => $index === 1,
-                        'order' => $index
-                    ];
-                })->all()
-            );
-        });
+        return $this;
     }
 }

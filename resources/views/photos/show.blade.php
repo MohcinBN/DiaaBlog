@@ -5,8 +5,10 @@
 @section('content')
 
             <div class="pt-10 mt-10 text-center w-full">
-                @if($photo->image)
-                    <img src="{{ asset('storage/' . $photo->image) }}" alt="{{ $photo->title }}" class="w-full h-40 object-cover rounded mb-4">
+                @if($photo->images)
+                @foreach($photo->images as $image)
+                    <img src="{{ asset('storage/' . $image) }}" alt="{{ $photo->title }}" class="w-full h-40 object-cover rounded mb-4">
+                @endforeach
                 @endif
 
                 <h3 class="text-xl font-bold mb-2">
