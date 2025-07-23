@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -63,9 +64,11 @@ Route::post('/upload-video', [VideoController::class, 'upload']);
 
 Route::get('/youtube-videos', [VideoController::class, 'fetchVideos']);
 
-//Route::get('/', [VideoController::class, 'fetchVideos']);
+// comments routes
+Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
+Route::put('/comments/approve/{id}', [CommentController::class, 'approveComment'])->name('comments.approve');
+Route::put('/comments/reject/{id}', [CommentController::class, 'rejectComment'])->name('comments.reject');
+Route::delete('/comments/destroy/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 
-//Route::get('slug', function (){
-    //return Str::slug('hi im mouad');
-//});

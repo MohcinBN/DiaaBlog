@@ -20,6 +20,9 @@
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.*')">
                         {{ __('Posts') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('comments.index')" :active="request()->routeIs('comments.*')">
+                        {{ __('Comments') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('photos.index')" :active="request()->routeIs('photos.*')">
                         {{ __('Photo Galleries') }}
                     </x-nav-link>
