@@ -40,7 +40,7 @@
                 <div class="p-6">
                   <h3 class="text-2xl font-bold mb-2">{{ $post->title }}</h3>
                   <p class="text-gray-700 mb-4">
-                    {{ \Illuminate\Support\Str::limit($post->content, 150, '...') }}
+                    {{ strip_tags(\Illuminate\Support\Str::limit($post->content, 150, '...')) }}
                   </p>
                   <a href="{{ route('posts.show', $post->slug) }}" class="text-orange-500 font-semibold hover:underline">
                     Read more
