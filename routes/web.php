@@ -4,7 +4,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PhotoController;
-use App\Http\Controllers\VideoController;
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,21 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/photos/edit/{photo}', [PhotoController::class, 'edit'])->name('photos.edit');
     Route::delete('/photos/destroy/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
     Route::put('/photos/update/{photo}', [PhotoController::class, 'update'])->name('photos.update');
-
-    // videos routes
-    Route::get('/videos', [VideoController::class, 'index'])->name('videos.index');
-    Route::get('/videos/create', [VideoController::class, 'create'])->name('videos.create');
-    Route::post('/videos/store', [VideoController::class, 'store'])->name('videos.store');
-    Route::get('/videos/edit/{video}', [VideoController::class, 'edit'])->name('videos.edit');
-    Route::delete('/videos/destroy/{video}', [VideoController::class, 'destroy'])->name('videos.destroy');
-    Route::put('/videos/update/{video}', [VideoController::class, 'update'])->name('videos.update');
 });
 
 require __DIR__.'/auth.php';
-
-Route::post('/upload-video', [VideoController::class, 'upload']);
-
-Route::get('/youtube-videos', [VideoController::class, 'fetchVideos']);
 
 // comments routes
 Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
