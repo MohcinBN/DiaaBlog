@@ -34,11 +34,6 @@ class DatabaseSeeder extends Seeder
                 ]);
             });
 
-            // Each user creates 2-4 videos
-            Video::factory(fake()->numberBetween(2, 4))->create([
-                'user_id' => $user->id
-            ]);
-
             // Each user creates 2-3 photo galleries
             Photo::factory(fake()->numberBetween(2, 3))->create([
                 'user_id' => $user->id
