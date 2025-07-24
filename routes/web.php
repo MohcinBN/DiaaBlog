@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
-//Route::get('/', [PostController::class, 'getPosts']);
-
-//Route::get('/', [PhotoController::class, 'getPhotos']);
 
 Route::get('/photos/{slug}',[PhotoController::class ,'show'])->name('photos.show');
 

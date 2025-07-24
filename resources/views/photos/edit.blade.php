@@ -30,14 +30,11 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Current Images</label>
+                            <label class="block text-sm font-medium text-gray-700">Current Images of the gallery</label>
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
                                 @foreach($photo->images as $image)
                                     <div class="relative">
-                                        <img src="{{ str_starts_with($image->path, 'http') ? $image->path : Storage::url($image->path) }}" alt="" class="w-full h-32 object-cover rounded-lg">
-                                        @if($image->is_primary)
-                                            <span class="absolute top-0 right-0 bg-green-500 text-white text-xs px-2 py-1 rounded-bl-lg">Primary</span>
-                                        @endif
+                                        <img src="{{ asset('storage/' . $image) }}" alt="" class="w-full h-80 object-cover rounded-lg">
                                     </div>
                                 @endforeach
                             </div>

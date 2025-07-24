@@ -37,7 +37,11 @@
                                         <td class="px-6 py-4">{{ $photo->title }}</td>
                                         <td class="px-6 py-4">{{ Str::limit($photo->caption, 50) }}</td>
                                         <td class="px-6 py-4">
-                                            <img src="{{ $photo->url }}" alt="{{ $photo->title }}" width="100" height="100">
+                                        @foreach($photo->images as $image)
+                                            @if((asset('storage/' . $image)))
+                                                <img src="{{ asset('storage/' . $image) }}" alt="{{ $photo->title }}" width="100" height="100" class="mr-2 mb-2">
+                                            @endif
+                                        @endforeach 
                                         </td>
                                         <td class="px-6 py-4">{{ $photo->created_at }}</td>
                                         <td class="px-6 py-4">
