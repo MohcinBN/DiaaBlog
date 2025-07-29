@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Http\Requests\Comments\CommentsStoreRequest;
+use App\Http\Requests\Comments\ReplyCommentsStoreRequest;
 use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
@@ -23,6 +24,20 @@ class CommentController extends Controller
        $comment->save();
 
        return redirect()->back()->with('success', 'Your comment added successfully, I will review it and approve it very soon :)');
+    }
+
+    public function reply(ReplyCommentsStoreRequest $request)
+    {
+        $commentData = $request->validated();
+
+        $comment = new Comment();
+        $comment->fill($commentData);
+
+        $comment->parent_id = $request->parent_id;
+
+        $comment->save();
+
+        return redirect()->back()->with('success', 'Your reply added successfully, I will review it and approve it very soon :)');
     }
 
     public function approveComment($id)

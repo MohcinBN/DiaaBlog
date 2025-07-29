@@ -50,6 +50,7 @@ require __DIR__.'/auth.php';
 
 // comments routes
 Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/comments/reply/store', [CommentController::class, 'reply'])->name('comments.reply.store');
 Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
 Route::put('/comments/approve/{id}', [CommentController::class, 'approveComment'])->name('comments.approve');
 Route::put('/comments/reject/{id}', [CommentController::class, 'rejectComment'])->name('comments.reject');

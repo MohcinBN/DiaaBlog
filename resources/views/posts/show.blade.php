@@ -27,10 +27,41 @@
     </div>
     @endif
     <div class="space-y-4">
-        @foreach ($post->comments()->where('status', 'approved')->get() as $comment)
+        @foreach ($post->comments()->where('status', 'approved')->where('parent_id', null)->get() as $comment)
             <div class="bg-gray-100 p-4 rounded">
                 <p class="font-bold">{{ $comment->name }}</p>
                 <p>{{ $comment->content }}</p>
+                <div class="pt-4">
+                @if($comment->children->isNotEmpty())
+                    @foreach ($comment->children()->where('status', 'approved')->get() as $childComment)
+                        <div class="pl-8 bg-gray-200 p-4 rounded">
+                            <p class="font-bold">{{ $childComment->name }}</p>
+                            <p>{{ $childComment->content }}</p>
+                        </div>
+                    @endforeach
+                @endif
+                </div>
+                <div x-data="{showReplyForm: false}">
+                <button @click="showReplyForm = !showReplyForm"  class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition duration-200 mt-4">
+                    Add reply on this comment
+                </button>
+                <div x-show="showReplyForm" class="mt-4">
+                    <form action="{{ route('comments.reply.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="parent_id" value="{{ $comment->id }}">
+                        <input type="hidden" name="post_id" value="{{ $comment->post_id }}">
+                        <div class="mb-4">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" class="w-full p-2 border border-gray-300 rounded" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="content">Content</label>
+                            <textarea name="content" id="content" class="w-full p-2 border border-gray-300 rounded" required></textarea>
+                        </div>
+                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition duration-200 mt-4">Reply</button>
+                    </form>
+                </div>
+            </div>
             </div>
         @endforeach
     </div>
