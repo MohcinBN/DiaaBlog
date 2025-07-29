@@ -23,7 +23,8 @@ class CommentFactory extends Factory
             'name' => fake()->name(), 
             'content' => fake()->paragraph(),
             'user_id' => null,
-            'post_id' => Post::factory(), 
+            'post_id' => Post::factory(),
+            'parent_id' => null,
         ];
     }
 }
