@@ -6,6 +6,9 @@ use App\Models\Comment;
 use App\Http\Requests\Comments\CommentsStoreRequest;
 use App\Http\Requests\Comments\ReplyCommentsStoreRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\CommentAdded;
+use Resend\Laravel\Facades\Resend;
+
 class CommentController extends Controller
 {
     public function index()
@@ -23,6 +26,13 @@ class CommentController extends Controller
 
        $comment->save();
 
+       /*Resend::emails()->send([
+        'from' => 'Diaa Blog <onboarding@resend.dev>',
+        'to' => ['WAITING TO VERIFY DOMAIN TO ADD DIAA ALHAK EL FALLOUS email'],
+        'subject' => 'New Comment Added',
+        'html' => (new CommentAdded($comment))->render(),
+       ]);*/
+
        return redirect()->back()->with('success', 'Your comment added successfully, I will review it and approve it very soon :)');
     }
 
@@ -36,6 +46,13 @@ class CommentController extends Controller
         $comment->parent_id = $request->parent_id;
 
         $comment->save();
+
+        /*Resend::emails()->send([
+            'from' => 'Diaa Blog <onboarding@resend.dev>',
+            'to' => ['WAITING TO VERIFY DOMAIN TO ADD DIAA ALHAK EL FALLOUS email'],
+            'subject' => 'New Comment Added',
+            'html' => (new CommentAdded($comment))->render(),
+        ]);*/
 
         return redirect()->back()->with('success', 'Your reply added successfully, I will review it and approve it very soon :)');
     }
