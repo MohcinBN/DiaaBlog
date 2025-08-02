@@ -25,6 +25,7 @@ class PostUpdateRequest extends FormRequest
             'title' => 'required',
             'content' => 'required',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'categories' => 'required|array|exists:categories,id',
         ];
     }
 }

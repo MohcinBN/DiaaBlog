@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
 use App\Http\Requests\Posts\PostStoreRequest;
 use App\Http\Requests\Posts\PostUpdateRequest;
 use App\Services\ImageService;
@@ -20,13 +21,14 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::paginate(6);
+        $posts = Post::with('categories')->paginate(6);
         return view('posts.index', compact('posts'));
     }
 
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+        return view('posts.create', compact('categories'));
     }
 
     public function store(PostStoreRequest $request)
@@ -40,14 +42,22 @@ class PostController extends Controller
 
         $postData['slug'] = Str::slug($postData['title']);
 
-        Post::create($postData);
+        $categoryIds = $request->categories;
+
+        unset($postData['categories']);
+
+        $post = Post::create($postData);
+
+        // attach categories to post using the pivot table
+        $post->categories()->attach($categoryIds);
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
 
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $categories = Category::all();
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     public function update(PostUpdateRequest $request, Post $post)
@@ -62,6 +72,9 @@ class PostController extends Controller
         }
 
         $post->update($postData);
+
+        // update categories if needed
+        $post->categories()->sync($request->categories);
 
         return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }

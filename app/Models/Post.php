@@ -15,7 +15,8 @@ class Post extends Model
         'slug',
         'content',
         'featured_image',
-        'user_id'
+        'user_id',
+        'categories'
     ];
 
     public function setSlugAttribute($value)

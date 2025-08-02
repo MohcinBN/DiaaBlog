@@ -25,6 +25,7 @@ class PostStoreRequest extends FormRequest
             'title' => 'required',
             'content' => 'required',
             'featured_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'categories' => 'required|array|exists:categories,id',
         ];
     }
 }
