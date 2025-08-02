@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -44,6 +45,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/photos/edit/{photo}', [PhotoController::class, 'edit'])->name('photos.edit');
     Route::delete('/photos/destroy/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
     Route::put('/photos/update/{photo}', [PhotoController::class, 'update'])->name('photos.update');
+
+    // categories routes
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/create/category', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/category/edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::delete('/category/destroy/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::put('/category/update/{category}', [CategoryController::class, 'update'])->name('category.update');
 });
 
 require __DIR__.'/auth.php';
