@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/newsLetter/edit/{newsLetter}', [NewsLetterController::class, 'edit'])->name('newsLetter.edit');
     Route::delete('/newsLetter/destroy/{newsLetter}', [NewsLetterController::class, 'destroy'])->name('newsLetter.destroy');
     Route::put('/newsLetter/update/{newsLetter}', [NewsLetterController::class, 'update'])->name('newsLetter.update');
+    Route::get('/newsLetter/export', [NewsLetterController::class, 'export'])->name('newsLetter.export');
 });
 
 require __DIR__.'/auth.php';

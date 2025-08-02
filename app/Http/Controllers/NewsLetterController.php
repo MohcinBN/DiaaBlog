@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\NewsLetter;
 use App\Http\Requests\NewsLetter\StoreNewsLetterRequest;
 use App\Http\Requests\NewsLetter\UpdateNewsLetterRequest;
+use App\Services\ExportCSV;
 
 class NewsLetterController extends Controller
 {
     public function index()
     {
-        $newsLetters = NewsLetter::paginate(10);
+        $newsLetters = NewsLetter::paginate(5);
         return view('News-letters.index', compact('newsLetters'));
     }
 
@@ -34,7 +35,7 @@ class NewsLetterController extends Controller
     public function destroy(NewsLetter $newsLetter)
     {
         $newsLetter->delete();
-        return redirect()->route('Newsletters.index')->with('success', 'NewsLetter deleted successfully');
+        return redirect()->route('newsLetters.index')->with('success', 'NewsLetter deleted successfully');
     }
 
     /** 
@@ -47,5 +48,10 @@ class NewsLetterController extends Controller
     public function embedForm()
     {
         return view('News-letters.embed-form');
+    }
+
+    public function export()
+    {
+        return (new ExportCSV)->export(NewsLetter::class);
     }
 }
