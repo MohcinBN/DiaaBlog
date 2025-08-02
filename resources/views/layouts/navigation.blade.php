@@ -29,6 +29,9 @@
                     <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                         {{ __('Categories') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('static-pages.index')" :active="request()->routeIs('static-pages.*')">
+                        {{ __('Static Pages') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -92,6 +95,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                 {{ __('Categories') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('static-pages.index')" :active="request()->routeIs('static-pages.*')">
+                {{ __('Static Pages') }}
             </x-responsive-nav-link>
         </div>
 

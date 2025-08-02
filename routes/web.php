@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\StaticPageController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -65,4 +66,16 @@ Route::put('/comments/approve/{id}', [CommentController::class, 'approveComment'
 Route::put('/comments/reject/{id}', [CommentController::class, 'rejectComment'])->name('comments.reject');
 Route::delete('/comments/destroy/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
+// static pages routes
+Route::get('/page/{slug}', [StaticPageController::class, 'show'])->name('static-pages.show');
+
+Route::middleware('auth')->group(function () {
+    // static pages management routes
+    Route::get('/static-pages', [StaticPageController::class, 'index'])->name('static-pages.index');
+    Route::get('/static-pages/create', [StaticPageController::class, 'create'])->name('static-pages.create');
+    Route::post('/static-pages/store', [StaticPageController::class, 'store'])->name('static-pages.store');
+    Route::get('/static-pages/edit/{staticPage}', [StaticPageController::class, 'edit'])->name('static-pages.edit');
+    Route::put('/static-pages/update/{staticPage}', [StaticPageController::class, 'update'])->name('static-pages.update');
+    Route::delete('/static-pages/destroy/{staticPage}', [StaticPageController::class, 'destroy'])->name('static-pages.destroy');
+});
 
