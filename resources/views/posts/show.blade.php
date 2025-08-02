@@ -1,24 +1,44 @@
 @extends('layouts.frontend')
 
-@section('title', 'Welcome')
+@section('title', $post->title ?? 'Article')
 
 @section('content')
 
 @if($post)
-<div class="mt-10 container mx-auto">
-    <h1 class="text-xl font-bold mb-4 text-center">
-        <span class="hover:text-orange-400 transition">
-            {{ strip_tags($post->title) }}
-        </span>
+<!-- Article Header Section -->
+<div class="max-w-4xl mx-auto px-4 pt-24 pb-8">
+    <!-- Breadcrumb -->
+    <div class="text-sm text-gray-500 mb-6">
+        <a href="{{ route('home') }}" class="hover:text-orange-500">Home</a> / 
+        <a href="{{ route('posts.index') }}" class="hover:text-orange-500">Articles</a> / 
+        <span>{{ $post->title }}</span>
+    </div>
+    
+    <!-- Article Title -->
+    <h1 class="text-3xl md:text-4xl font-bold mb-4">
+        {{ strip_tags($post->title) }}
     </h1>
-
+    
+    <!-- Article Meta -->
+    <div class="flex items-center text-sm text-gray-500 mb-8">
+        <span>{{ $post->created_at->format('F j, Y') }}</span>
+        @if($post->category)
+        <span class="mx-2">•</span>
+        <a href="#" class="hover:text-orange-500">{{ $post->category->name }}</a>
+        @endif
+    </div>
+    
+    <!-- Featured Image -->
     @if($post->featured_image)
-    <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" class="w-full h-auto object-cover rounded mb-4">
+    <div class="mb-8">
+        <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" class="w-full h-auto object-cover rounded-lg shadow-md">
+    </div>
     @endif
-
-    <p class="text-gray-600 mb-4">
-        {{ strip_tags($post->content) }}
-    </p>
+    
+    <!-- Article Content -->
+    <div class="prose prose-lg max-w-none mb-12">
+        {!! $post->content !!}
+    </div>
 
     <h2 class="text-xl font-bold mb-4">Comments</h2>
     @if(session('success'))
