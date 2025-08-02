@@ -7,6 +7,7 @@ use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StaticPageController;
+use App\Http\Controllers\NewsLetterController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -54,6 +55,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/category/edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
     Route::delete('/category/destroy/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
     Route::put('/category/update/{category}', [CategoryController::class, 'update'])->name('category.update');
+
+    // news letters routes
+    Route::get('/newsLetters', [NewsLetterController::class, 'index'])->name('newsLetters.index');
+    Route::get('/newsLetter/edit/{newsLetter}', [NewsLetterController::class, 'edit'])->name('newsLetter.edit');
+    Route::delete('/newsLetter/destroy/{newsLetter}', [NewsLetterController::class, 'destroy'])->name('newsLetter.destroy');
+    Route::put('/newsLetter/update/{newsLetter}', [NewsLetterController::class, 'update'])->name('newsLetter.update');
 });
 
 require __DIR__.'/auth.php';
@@ -78,4 +85,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/static-pages/update/{staticPage}', [StaticPageController::class, 'update'])->name('static-pages.update');
     Route::delete('/static-pages/destroy/{staticPage}', [StaticPageController::class, 'destroy'])->name('static-pages.destroy');
 });
+
+// public routes for news letters
+Route::post('/newsLetter/store', [NewsLetterController::class, 'store'])->name('newsLetter.store');
+Route::get('/create/newsLetter', [NewsLetterController::class, 'create'])->name('newsLetter.create');
+Route::get('/newsLetter/embed-form', [NewsLetterController::class, 'embedForm'])->name('newsLetter.embed-form');
+
+
 

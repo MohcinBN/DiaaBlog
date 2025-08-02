@@ -32,6 +32,9 @@
                     <x-nav-link :href="route('static-pages.index')" :active="request()->routeIs('static-pages.*')">
                         {{ __('Static Pages') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('newsLetters.index')" :active="request()->routeIs('newsLetters.*')">
+                        {{ __('Newsletters') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -98,6 +101,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('static-pages.index')" :active="request()->routeIs('static-pages.*')">
                 {{ __('Static Pages') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('newsLetters.index')" :active="request()->routeIs('newsLetters.*')">
+                {{ __('Newsletters') }}
             </x-responsive-nav-link>
         </div>
 
