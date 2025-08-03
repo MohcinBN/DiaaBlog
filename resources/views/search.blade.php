@@ -13,7 +13,7 @@
               <div class="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition duration-200">
                 <a href="{{ route($result->type === 'post' ? 'posts.show' : 'photos.show', $result->slug) }}" class="block overflow-hidden">
                   @if($result->featured_image)
-                    <img src="{{ $result->featured_image }}" alt="{{ $result->title }}" class="w-full h-56 object-cover hover:scale-105 transition duration-300">
+                    <img src="{{ asset('storage/' . $result->featured_image) ?? 'https://placehold.co/600x400/EEE/31343C' }}" alt="{{ $result->title }}" class="w-full h-56 object-cover hover:scale-105 transition duration-300">
                   @endif
                   <div class="p-4">
                     <h3 class="text-lg font-semibold mb-2">{{ $result->title }}</h3>
