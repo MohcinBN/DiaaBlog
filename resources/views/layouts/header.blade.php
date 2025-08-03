@@ -10,9 +10,11 @@
       
       <!-- Primary Navigation -->
       <div class="hidden md:flex items-center space-x-1">
-        <a href="{{ route('posts.index') }}" class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md transition duration-150">Articles</a>
-        <a href="#gallery" class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md transition duration-150">Gallery</a>
-        <a href="#videos" class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md transition duration-150">Videos</a>
+        <a href="{{ route('all-posts') }}" class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md transition duration-150">Articles</a>
+        <a href="{{ route('all-galleries') }}" class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md transition duration-150">Gallery</a>
+        @auth
+        <a href="{{ route('dashboard') }}" class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md transition duration-150">Dashboard</a>
+        @endauth
       </div>
       
       <!-- Mobile menu button -->

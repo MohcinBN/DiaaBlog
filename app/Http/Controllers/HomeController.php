@@ -11,16 +11,16 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->get();
+        $posts = Post::latest()->take(6)->get();
 
-        $photos = Photo::latest()->get();
+        $photos = Photo::latest()->take(6)->get();
 
         $response = Http::get('https://www.googleapis.com/youtube/v3/search', [
         'key' => env('YOUTUBE_API_KEY'),
         'channelId' => env('YOUTUBE_CHANNEL_ID'),
             'part' => 'snippet',
             'order' => 'date',
-            'maxResults' => 3,
+            'maxResults' => 6,
             'type' => 'video',
         ]);
 
@@ -39,5 +39,17 @@ class HomeController extends Controller
         }
 
         return view('welcome', compact('posts', 'photos', 'latestVideos'));
+    }
+
+    public function allPostsPage() {
+        $posts = Post::latest()->paginate(10);
+
+        return view('all-posts', compact('posts'));
+    }
+
+    public function allPhotosPage() {
+        $galleries = Photo::latest()->paginate(10);
+
+        return view('all-galleries', compact('galleries'));
     }
 }

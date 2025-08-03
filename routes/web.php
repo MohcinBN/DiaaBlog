@@ -96,5 +96,11 @@ Route::get('/newsLetter/embed-form', [NewsLetterController::class, 'embedForm'])
 // search route
 Route::get('/search-page', [SearchController::class, 'search'])->name('search');
 
+// all resources routes
+Route::get('/all-posts', [HomeController::class, 'allPostsPage'])->name('all-posts');
+Route::get('/all-galleries', [HomeController::class, 'allPhotosPage'])->name('all-galleries');
+
+Route::get('/{slug}', [StaticPageController::class, 'show'])->name('static-pages.show');
+
 
 

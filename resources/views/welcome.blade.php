@@ -7,9 +7,10 @@
   <section class="pt-24 pb-12 px-4">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6">Welcome to <span class="text-orange-500">DiaaBlog</span></h1>
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">Hey, I'm Diaa Alhak EL FALLOUS</h1>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-          A simple, clean blog sharing thoughts, ideas, and experiences.
+        I'm helping Companies find good IT profiles, and much more.<br>
+        And this is my blog where i'm sharing my thoughts, ideas, and experiences.
         </p>
       </div>
       
@@ -29,16 +30,6 @@
         </a>
         <a href="#" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-full text-sm font-medium transition duration-150">
           Lifestyle
-        </a>
-      </div>
-      
-      <!-- Call to Action -->
-      <div class="flex justify-center space-x-4 mb-8">
-        <a href="{{ route('posts.index') }}" class="bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-6 rounded-md transition duration-150">
-          Browse All Articles
-        </a>
-        <a href="#gallery" class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2 px-6 rounded-md transition duration-150">
-          View Gallery
         </a>
       </div>
 
@@ -86,7 +77,7 @@
           </div>
           
           <div class="mt-12 text-center">
-            <a href="{{ route('posts.index') }}" class="inline-block border border-gray-300 hover:border-orange-500 text-gray-700 hover:text-orange-500 font-medium py-2 px-6 rounded-md transition duration-150">
+            <a href="{{ route('all-posts') }}" class="inline-block border border-gray-300 hover:border-orange-500 text-gray-700 hover:text-orange-500 font-medium py-2 px-6 rounded-md transition duration-150">
               View All Articles
             </a>
           </div>
@@ -126,6 +117,11 @@
                 </div>
               </div>
             @endforeach
+          </div>
+          <div class="mt-12 text-center">
+            <a href="{{ route('all-galleries') }}" class="inline-block border border-gray-300 hover:border-orange-500 text-gray-700 hover:text-orange-500 font-medium py-2 px-6 rounded-md transition duration-150">
+              View All Galleries
+            </a>
           </div>
         @else
           <p class="text-center text-gray-600 text-lg py-12">No photos available at the moment.</p>

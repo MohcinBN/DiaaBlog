@@ -1,14 +1,14 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $page->title }}
-        </h2>
-    </x-slot>
+@extends('layouts.frontend')
 
-    <div class="py-12">
+@section('title', 'Welcome')
+
+@section('content')
+
+    <div class="pt-24 pb-12 px-4 bg-white">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    <h1 class="text-2xl font-bold mb-8 border-l-4 border-orange-500 pl-4">{{ $page->title }}</h1>
                     <div class="prose max-w-none">
                         {!! $page->content !!}
                     </div>
@@ -26,4 +26,3 @@
             </div>
         </div>
     </div>
-</x-app-layout>
