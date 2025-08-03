@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\NewsLetterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SearchController;
 
 
 
@@ -91,6 +92,9 @@ Route::middleware('auth')->group(function () {
 Route::post('/newsLetter/store', [NewsLetterController::class, 'store'])->name('newsLetter.store');
 Route::get('/create/newsLetter', [NewsLetterController::class, 'create'])->name('newsLetter.create');
 Route::get('/newsLetter/embed-form', [NewsLetterController::class, 'embedForm'])->name('newsLetter.embed-form');
+
+// search route
+Route::get('/search-page', [SearchController::class, 'search'])->name('search');
 
 
 

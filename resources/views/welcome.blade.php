@@ -41,6 +41,14 @@
           View Gallery
         </a>
       </div>
+
+      <div class="text-center">
+        Or search for a specific article
+          <form action="{{ route('search') }}" method="get" class="w-1/2 mx-auto flex border rounded-md p-2 mt-4 focus:outline-none">
+            <input type="text" name="search" id="search" placeholder="Search..." class="flex-grow border-none focus:outline-none">
+            <button class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md" type="submit">Search</button>
+          </form>
+      </div>
     </div>
   </section>
 
