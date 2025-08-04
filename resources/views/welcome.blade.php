@@ -62,6 +62,13 @@
                 </a>
                 <div class="p-4">
                   <div class="text-xs text-gray-500 mb-2">{{ $post->created_at->format('F j, Y') }}</div>
+                  <div class="text-xs text-gray-500 mb-2">
+                    @foreach ($post->categories as $category)
+                      <span class="mr-2 bg-gray-100 px-2 py-1 rounded">
+                        <a href="{{ route('category-results', $category->slug) }}">{{ $category->name }}</a>
+                      </span>
+                    @endforeach
+                  </div>
                   <h3 class="text-lg font-bold mb-2 hover:text-orange-500">
                     <a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a>
                   </h3>

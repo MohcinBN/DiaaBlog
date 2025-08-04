@@ -101,6 +101,8 @@ Route::get('/all-posts', [HomeController::class, 'allPostsPage'])->name('all-pos
 Route::get('/all-galleries', [HomeController::class, 'allPhotosPage'])->name('all-galleries');
 
 Route::get('/{slug}', [StaticPageController::class, 'show'])->name('static-pages.show');
+Route::get('/category/{category}', [HomeController::class, 'categoryResultsPage'])->name('category-results');
+
 
 
 

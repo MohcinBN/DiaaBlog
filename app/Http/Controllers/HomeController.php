@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Photo;
 use App\Models\Post;
-use App\Models\Video;
+use App\Models\Category;
 use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->take(6)->get();
+        $posts = Post::with('categories')->latest()->take(6)->get();
 
         $photos = Photo::latest()->take(6)->get();
 
@@ -51,5 +51,18 @@ class HomeController extends Controller
         $galleries = Photo::latest()->paginate(10);
 
         return view('all-galleries', compact('galleries'));
+    }
+
+    public function categoryResultsPage($slug) {
+        $categoryModel = Category::where('slug', $slug)->firstOrFail();
+
+        $posts = Post::whereHas('categories', function ($query) use ($categoryModel) {
+            $query->where('categories.id', $categoryModel->id);
+        })->latest()->paginate(10);
+    
+        return view('category-results', [
+            'posts' => $posts,
+            'category' => $categoryModel->name,
+        ]);
     }
 }
