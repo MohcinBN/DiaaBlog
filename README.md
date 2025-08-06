@@ -1,18 +1,37 @@
-## Diaa Blog. 
+# Diaa Blog - Laravel Application
 
-We will add features to this blog consistently.
+## Project Overview
+A feature-rich blog platform built with Laravel, featuring:
+- User roles and authentication
+- Post management with categories
+- Comment system with admin replies
+- Newsletter functionality
+- YouTube video integration
+- Static page management
+- Search functionality
 
-Notes for to do, to not forget:
+## Development Setup
+1. Clone repository
+2. Run `composer install`
+3. Copy `.env.example` to `.env` and configure
+4. Run migrations: `php artisan migrate`
+5. Install frontend dependencies: `npm install && npm run dev`
 
-- Refactor Photo and Video Controllers -- "DONE"
-- Write feature tests for existing features (PestPHP) -- "DONE"
+## Testing
+We use PestPHP for testing with TDD approach:
+- Run all tests: `php artisan test`
+- Run specific test: `php artisan test --filter=TestName`
 
-After that all below features will be added with their Unit tests using PestPHP and TDD:
+## Adding New Features
+When adding features:
+1. Create feature branch
+2. Write tests first (TDD)
+3. Implement feature
+4. Write documentation
+5. Submit PR for review
 
-- Add replies to comments (From site owner).
-- Add notifications to admin in case someone comments on a post.
-- Add categories to posts.
-- Add newsletter functionality to the blog (ability to subscribe to newsletter, with ability to admin to export subscribers).
-- Add static pages management to the blog (about, contact, privacy policy, terms and conditions).
-- Add search functionality to the blog.
-- Finilize the frontend part of the blog.
+## Roadmap
+Planned features:
+- Strava integration
+- User UID system
+- Improved text editor support
