@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Photo;
 use App\Models\Post;
 use App\Models\Category;
-use Illuminate\Support\Facades\Http;
+use App\Services\getYoutubeVideosService;
 
 class HomeController extends Controller
 {
@@ -15,28 +15,8 @@ class HomeController extends Controller
 
         $photos = Photo::latest()->take(6)->get();
 
-        $response = Http::get('https://www.googleapis.com/youtube/v3/search', [
-        'key' => env('YOUTUBE_API_KEY'),
-        'channelId' => env('YOUTUBE_CHANNEL_ID'),
-            'part' => 'snippet',
-            'order' => 'date',
-            'maxResults' => 6,
-            'type' => 'video',
-        ]);
-
-        $latestVideos = collect();
-
-        if ($response->successful()) {
-            $items = $response->json()['items'] ?? [];
-
-            $latestVideos = collect($items)->map(function ($video) {
-                return [
-                    'title' => $video['snippet']['title'],
-                    'thumbnail' => $video['snippet']['thumbnails']['high']['url'],
-                    'videoId' => $video['id']['videoId'],
-                ];
-            });
-        }
+        $youtubeVideos = new getYoutubeVideosService();
+        $latestVideos = $youtubeVideos->getVideos();
 
         return view('welcome', compact('posts', 'photos', 'latestVideos'));
     }
