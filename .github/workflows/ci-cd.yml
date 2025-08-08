@@ -10,6 +10,11 @@ on:
       - '*'
 
 jobs:
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+
     steps:
       - uses: actions/checkout@v3
 
@@ -31,12 +36,6 @@ jobs:
       - name: Run migrations
         run: php artisan migrate --force
 
-    deploy-staging:
-      name: Deploy to Staging
-      runs-on: ubuntu-latest
-      if: github.ref == 'refs/heads/develop'
-
-    steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
@@ -53,17 +52,37 @@ jobs:
             php artisan view:cache
             chown -R www-data:www-data .
 
-    deploy-production:
-      name: Deploy to Production
-      runs-on: ubuntu-latest
-      if: github.ref == 'refs/heads/main'
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
 
-      steps:
-        - name: Deploy via SSH
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.PROD_HOST }}
-            username: ${{ secrets.PROD_USER }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: mbstring, xml, bcmath, curl, zip, mysql
+
+      - name: Copy .env.testing
+        run: cp .env.example .env
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Generate key
+        run: php artisan key:generate
+
+      - name: Run migrations
+        run: php artisan migrate --force
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
           key: ${{ secrets.PROD_KEY }}
           script: |
             cd /var/www/diaaalhak.com
