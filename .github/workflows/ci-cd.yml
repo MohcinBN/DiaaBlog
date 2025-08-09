@@ -24,13 +24,21 @@ jobs:
           php-version: 8.2
           extensions: mbstring, xml, bcmath, curl, zip, mysql
 
-      - name: Copy .env.testing
-        run: cp .env.example .env
-
-      - name: Install dependencies
+      - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: Generate key
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Generate Laravel key
         run: php artisan key:generate
 
       - name: Run migrations
@@ -46,6 +54,8 @@ jobs:
             cd /var/www/staging.diaaalhak.com
             git pull --rebase origin develop
             composer install --no-dev --optimize-autoloader
+            npm ci
+            npm run build
             php artisan migrate --force
             php artisan config:cache
             php artisan route:cache
@@ -66,13 +76,21 @@ jobs:
           php-version: 8.2
           extensions: mbstring, xml, bcmath, curl, zip, mysql
 
-      - name: Copy .env.testing
-        run: cp .env.example .env
-
-      - name: Install dependencies
+      - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: Generate key
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Generate Laravel key
         run: php artisan key:generate
 
       - name: Run migrations
@@ -88,6 +106,8 @@ jobs:
             cd /var/www/diaaalhak.com
             git pull --rebase origin main
             composer install --no-dev --optimize-autoloader
+            npm ci
+            npm run build
             php artisan migrate --force
             php artisan config:cache
             php artisan route:cache
