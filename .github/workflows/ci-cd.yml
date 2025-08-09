@@ -18,25 +18,41 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: List repo files (debug)
+        run: ls -la
+
+      - name: Copy .env.example to .env
+        run: cp .env.example .env
+
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
           extensions: mbstring, xml, bcmath, curl, zip, mysql
 
-      - name: Copy .env.testing
-        run: cp .env.example .env
-
-      - name: Install dependencies
+      - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: Generate key
-        run: php artisan key:generate
+      # Node setup and build steps
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '23'
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Build assets
+        run: npm run build
+
+      # Skipping key generate because server has its own .env with APP_KEY
+      # - name: Generate app key
+      #   run: php artisan key:generate
 
       - name: Run migrations
         run: php artisan migrate --force
 
-      - name: Deploy via SSH
+      - name: Deploy via SSH to staging
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.STAGING_HOST }}
@@ -46,6 +62,8 @@ jobs:
             cd /var/www/staging.diaaalhak.com
             git pull --rebase origin develop
             composer install --no-dev --optimize-autoloader
+            npm install
+            npm run build
             php artisan migrate --force
             php artisan config:cache
             php artisan route:cache
@@ -60,25 +78,39 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: List repo files (debug)
+        run: ls -la
+
+      - name: Copy .env.example to .env
+        run: cp .env.example .env
+
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
           extensions: mbstring, xml, bcmath, curl, zip, mysql
 
-      - name: Copy .env.testing
-        run: cp .env.example .env
-
-      - name: Install dependencies
+      - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: Generate key
-        run: php artisan key:generate
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '23'
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Build assets
+        run: npm run build
+
+      # - name: Generate app key
+      #   run: php artisan key:generate
 
       - name: Run migrations
         run: php artisan migrate --force
 
-      - name: Deploy via SSH
+      - name: Deploy via SSH to production
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.PROD_HOST }}
@@ -88,6 +120,8 @@ jobs:
             cd /var/www/diaaalhak.com
             git pull --rebase origin main
             composer install --no-dev --optimize-autoloader
+            npm install
+            npm run build
             php artisan migrate --force
             php artisan config:cache
             php artisan route:cache
