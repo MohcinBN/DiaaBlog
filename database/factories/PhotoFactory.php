@@ -23,6 +23,7 @@ class PhotoFactory extends Factory
         
         return [
             'title' => $theme . ' Gallery - ' . fake()->words(3, true),
+            'slug' => fake()->slug(3),
             'caption' => fake()->paragraph(2),
             'user_id' => User::factory(),
             'images' => json_encode(
