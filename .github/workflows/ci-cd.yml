@@ -44,7 +44,7 @@ jobs:
           key: ${{ secrets.STAGING_KEY }}
           script: |
             cd /var/www/staging.diaaalhak.com
-            git pull origin develop
+            git pull --rebase origin develop
             composer install --no-dev --optimize-autoloader
             php artisan migrate --force
             php artisan config:cache
