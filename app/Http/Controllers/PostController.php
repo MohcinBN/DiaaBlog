@@ -71,10 +71,16 @@ class PostController extends Controller
             );
         }
 
+        $postData['slug'] = Str::slug($postData['title']);
+
+        $categoryIds = $request->categories;
+
+        unset($postData['categories']);
+
         $post->update($postData);
 
         // update categories if needed
-        $post->categories()->sync($request->categories);
+        $post->categories()->sync($categoryIds);
 
         return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }
