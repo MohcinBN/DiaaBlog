@@ -60,6 +60,8 @@ jobs:
           key: ${{ secrets.STAGING_KEY }}
           script: |
             cd /var/www/staging.diaaalhak.com
+            git reset --hard
+            git clean -fd
             git pull --rebase origin develop
             composer install --no-dev --optimize-autoloader
             npm install
@@ -118,6 +120,8 @@ jobs:
           key: ${{ secrets.PROD_KEY }}
           script: |
             cd /var/www/diaaalhak.com
+            git reset --hard
+            git clean -fd
             git pull --rebase origin main
             composer install --no-dev --optimize-autoloader
             npm install

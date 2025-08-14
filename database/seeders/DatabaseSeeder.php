@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'is_admin' => 1,
             'password' => bcrypt('password'),
         ])->each(function ($user) {
             // Each user creates 3-5 posts
@@ -35,9 +36,9 @@ class DatabaseSeeder extends Seeder
             });
 
             // Each user creates 2-3 photo galleries
-            Photo::factory(fake()->numberBetween(2, 3))->create([
+            /*Photo::factory(fake()->numberBetween(2, 3))->create([
                 'user_id' => $user->id
-            ]);
+            ]);*/
         });
     }
 }
