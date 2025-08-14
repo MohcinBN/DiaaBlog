@@ -39,6 +39,92 @@
     <div class="prose prose-lg max-w-none mb-12">
         {!! $post->content !!}
     </div>
+    
+    <style>
+        /* Responsive video embeds */
+        .video-embed {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            margin-bottom: 1rem;
+        }
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        figure.media {
+            margin: 1rem 0;
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const oembeds = document.querySelectorAll('figure.media oembed');
+            
+            oembeds.forEach(function(oembed) {
+                const url = oembed.getAttribute('url');
+                if (!url) return;
+                
+                if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                    let videoId = '';
+                    
+                    if (url.includes('youtube.com')) {
+                        const match = url.match(/[\?&]v=([^&]+)/);
+                        if (match && match[1]) videoId = match[1];
+                    } else if (url.includes('youtu.be')) {
+                        const match = url.match(/youtu\.be\/([^?&]+)/);
+                        if (match && match[1]) videoId = match[1];
+                    }
+                    
+                    if (videoId) {
+                        const container = document.createElement('div');
+                        container.className = 'video-embed';
+                        
+                        // Create iframe
+                        const iframe = document.createElement('iframe');
+                        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                        iframe.setAttribute('frameborder', '0');
+                        iframe.setAttribute('allowfullscreen', 'true');
+                        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                        
+                        // Replace oembed with iframe
+                        container.appendChild(iframe);
+                        oembed.parentNode.replaceChild(container, oembed);
+                    }
+                }
+                
+                // Handle Vimeo videos
+                else if (url.includes('vimeo.com')) {
+                    const match = url.match(/vimeo\.com\/([^?&]+)/);
+                    if (match && match[1]) {
+                        const videoId = match[1];
+                        
+                        // Create responsive container
+                        const container = document.createElement('div');
+                        container.className = 'video-embed';
+                        
+                        // Create iframe
+                        const iframe = document.createElement('iframe');
+                        iframe.src = `https://player.vimeo.com/video/${videoId}`;
+                        iframe.setAttribute('frameborder', '0');
+                        iframe.setAttribute('allowfullscreen', 'true');
+                        iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+                        
+                        // Replace oembed with iframe
+                        container.appendChild(iframe);
+                        oembed.parentNode.replaceChild(container, oembed);
+                    }
+                }
+            });
+        });
+    </script>
 
     <h2 class="text-xl font-bold mb-4">Comments</h2>
     @if(session('success'))
